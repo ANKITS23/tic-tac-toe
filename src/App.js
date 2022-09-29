@@ -54,6 +54,7 @@ export default class App extends React.Component {
           <div className='mb-4 ml-4 text-blue-300 text-4xl flex text-center my-0 mx-auto'>{status}</div>
           <ol></ol>
         </div>
+        <a href='/' className=' ml-4 text-white border-2 border-white w-[100px] text-2xl flex text-center p-2'>Reset</a>
       </div>
     );
   }
