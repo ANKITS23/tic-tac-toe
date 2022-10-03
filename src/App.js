@@ -4,7 +4,7 @@ import TicTacToe from "./TicTacToe";
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-gray-600 flex items-center justify-center h-[100vh] bg-[#222]">
       <TicTacToe />
     </div>
   );

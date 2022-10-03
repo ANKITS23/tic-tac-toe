@@ -5,6 +5,7 @@ import EndGame from "./EndGame";
 const INITIAL = "";
 const X_PLAYER = "X";
 const O_PLAYER = "O";
+
 const winCombination = [
   [0, 1, 2],
   [3, 4, 5],
@@ -22,7 +23,10 @@ function TicTacToe() {
   const [gameFinished, setGameFinished] = useState(false);
   const [draw, setDraw] = useState(false);
   const [winCount, setwinCount] = useState({ X: 0, O: 0 });
-  const [step , setStep ] = useState({ X: 0, O: 0 });
+  const [drawCount, setDrawCount] = useState(0);
+  const [step , setStep ] = useState(player);
+  // const [Undo , setisUndoRedo ] = useState(false);
+  // const [undo, redo] = useState()
 
   function isGameOver() {
     if (!gameFinished) {
@@ -35,13 +39,12 @@ function TicTacToe() {
         ) {
           setGameFinished(true);
           setwinCount({ ...winCount, X: winCount.X + 1 });
-          setStep({...step , X: step.X - 1  })
+          setStep(step)
           console.log("X WON");
           return;
         }
-      }
+      };
 
- 
       for (let i = 0; i < 8; i++) {
         if (
           grid[winCombination[i][0]] === O_PLAYER &&
@@ -50,31 +53,39 @@ function TicTacToe() {
         ) {
           setGameFinished(true);
           setwinCount({ ...winCount, O: winCount.O + 1 });
-          setStep({...step , O: step.X - 1  })
+          setStep(step)
           console.log("O WON");
           return;
         }
-      }
+      };
 
-     
       if (!grid.includes(INITIAL)) {
         setDraw(true);
+        setDrawCount(drawCount + 1);
         setGameFinished(true);
         console.log("DRAW");
       }
     }
-  }
+  };
 
   function restartGame() {
     setGrid(Array(9).fill(INITIAL));
     setGameFinished(false);
     setDraw(false);
-  }
+  };
 
   function clearHistory() {
     setwinCount({ X: 0, O: 0 });
     restartGame();
-  }
+  };
+  
+  //   undo = (e) => {
+  //   e.preventDefault();
+  //   this.props.undoRedo.undo();
+  //   this.setState({
+  //     isUndoRedo: true,
+  //   });
+  // };
 
   isGameOver();
 
@@ -95,15 +106,24 @@ function TicTacToe() {
     setPlayer(!player);
   }
 
+  
+
   return (
     <div>
       <span className="win-history">
         X's WINS: {winCount.X}
         <br />
         O's WINS: {winCount.O}
+        <br/>
+        Draw Game:{drawCount}
       </span>
-      <button onClick={setStep}></button>
+      {/* <button className='reset' onClick = {undo()}> Undo </button> */}
+   
+      {/* <button onClick={setStep} className="win-history">UNDO</button> */}
+   
+     
       
+
       {gameFinished && (
         <EndGame
           winCount={winCount}
@@ -117,5 +137,10 @@ function TicTacToe() {
     </div>
   );
 }
+
+// TicTacToe.propTypes = {
+//   undoRedo: PropTypes.object.isRequired, 
+// };
+
 
 export default TicTacToe;
